@@ -1,0 +1,27 @@
+.under-area {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    width: 92%;
+    height: 500px;
+    border: 2px dashed rgba(0, 0, 0, .3);
+    box-shadow: 0 0 7px #09C4A7;
+    margin-left: 4%;
+}
+
+.under-area * {
+    text-align: right;
+    direction: rtl;
+    font-size: 20px;
+    margin: 2%;
+    line-height: 1.5;
+    /* border-bottom: 1px solid black; קו עם גודל 1 פיקסל וצבע שחור */
+
+}
+
+.newImageArea {
+    border: 0.3px solid rgba(0, 0, 0, .3);
+    width: 70%;
+    height: 450px;
+}

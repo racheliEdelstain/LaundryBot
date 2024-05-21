@@ -1,0 +1,37 @@
+/*  #09C4A7    #2C3C5A    #859CB9 */
+
+
+.p {
+  direction: rtl;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  color: #2C3C5A;
+  text-shadow: 0 0 6px #09C4A7;
+  font-weight: 600;
+}
+
+.item1 {
+  grid-area: 'myArea';
+  margin-top: 14%;
+}
+.item2-item3 {
+  display: grid;
+  grid-template-areas: 'myArea myArea';
+  padding: 20px 0;
+  width: 100%;
+  gap: 10px;
+}
+
+.grid-container {
+  margin: 4%;
+}
+.grid-container h2{
+  font-size: 25px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  color: #2C3C5A;
+  font-weight: 600;
+}
