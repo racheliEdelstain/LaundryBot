@@ -48,6 +48,8 @@
     position: absolute;
     width: 42%;
     height: 550px;
+    max-width: 42%;
+    max-height: 550px;
     opacity: 0;
 }
 

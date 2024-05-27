@@ -2,112 +2,117 @@ import './styles/CardStyle.css'
 
 import React from "react";
 import InputMask from "react-input-mask";
+import Enrollment from './Enrollment';
+import EnterToSiteForm from './EnterToSite';
+import { useState } from 'react';
 
-export class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
 
-      CartNumber: "•••• •••• •••• ••••",
-      Name: "Your NAME",
-      cardStyle: "Default",
-      day: "•• ",
-      month: " •• "
-    };
-  }
-  handleNumberChange = e => {
+export default function Card({ CreditData, setCreditData }) {
+
+  let CreditCardDataTemp = CreditData;
+
+
+  function handleNumberChange(e) {
     let text = e.target.value;
     let initial = "•••• •••• •••• ••••";
     let number_card;
     if (text.length === 0) {
-      this.setState({
-        CartNumber: initial
-      });
-    } else {
-      number_card = initial.slice(text.length - 1);
-
-      this.setState({
-        CartNumber: e.target.value + number_card
+      CreditCardDataTemp.CreditNumber = initial
+      setCreditData({
+        CreditCardDataTemp
       });
     }
+    else {
+      number_card = initial.slice(text.length - 1);
+      CreditCardDataTemp.CreditNumber = e.target.value + number_card
+
+      setCreditData({
+        CreditCardDataTemp
+      });
+    }
+
   };
-  handleNameChange = e => {
+  function handleNameChange(e) {
     let name = e.target.value;
     if (e.target.value.match(/[0-9]/g)) {
       e.target.value = name.slice(0, name.length - 1);
     }
-    this.setState({
-      Name: e.target.value.toUpperCase()
+    CreditCardDataTemp.NameUserCredit = e.target.value.toUpperCase()
+    setCreditData({
+      CreditCardDataTemp
     });
     if (e.target.value === "") {
-      this.setState({
-        Name: "Your NAME"
+      CreditCardDataTemp.NameUserCredit = "Your NAME"
+
+      setCreditData({
+        CreditCardDataTemp
       });
     }
   };
-  handleExpiryChange = e => {
+  function handleExpiryChange(e) {
     let date = e.target.value;
     if (date.slice(0, 2) > 12) {
       e.target.value = 1;
     }
-    if (date.slice(0, 2) < 33) {
-      this.setState({
-        day: date.slice(0, 2),
-        month: date.slice(2)
+    if (date.slice(0, 2) < 13) {
+      CreditCardDataTemp.ValidYear = date.slice(0, 2)
+      CreditCardDataTemp.ValidYear = date.slice(2)
+
+      setCreditData({
+        CreditCardDataTemp
       });
     }
     if (e.target.value === "") {
-      this.setState({
-        day: "•• ",
-        month: " •• "
+      CreditCardDataTemp.ValidYear = "•• "
+      CreditCardDataTemp.ValidYear = "•• "
+      setCreditData({
+        CreditCardDataTemp
       });
     }
   };
-  render() {
-    return (
-      <div className="containerPaymentForm">
-        <div className={this.state.cardStyle}>
-          <h2>{this.state.CartNumber}</h2>
-          <div className='validAndName'>
-            <h6 id="valid">
-              valid thru
-              <br />
-              {this.state.day}/{this.state.month}
-            </h6>
-            <h3>{this.state.Name}</h3>
-          </div>
+  return (
+    <div className="containerPaymentForm">
+      <div className="Default">
+        <h2>{CreditData.CreditNumber}</h2>
+        <div className='validAndName'>
+          <h6 id="valid">
+            valid thru
+            <br />
+            {CreditData.ValidYear}/{CreditData.ValidMonth}
+          </h6>
+          <h3>{CreditData.NameUserCredit}</h3>
         </div>
-
-        <form className="form-input">
-          <label>מספר כרטיס:</label>
-          <InputMask
-            mask=" 9999 9999 9999 9999"
-            maskChar=""
-            placeholder="Number Card"
-            onChange={this.handleNumberChange}
-          />
-
-          <br></br>
-          <label>בעל הכרטיס:</label>
-          <InputMask
-            maskChar=""
-            placeholder="User Name"
-            maxLength="20"
-            onChange={this.handleNameChange}
-          />
-          <br></br>
-          <label>תוקף:</label>
-          <InputMask
-            mask="99 99"
-            maskChar=""
-            //maxLength="4"
-            placeholder="month / day"
-            onChange={this.handleExpiryChange}
-          />
-        </form>
       </div>
-    );
-  }
+
+      <form className="form-input">
+        <label>מספר כרטיס:</label>
+        <InputMask
+          mask=" 9999 9999 9999 9999"
+          maskChar=""
+          placeholder="Number Card"
+          onChange={handleNumberChange}
+        />
+
+        <br></br>
+        <label>בעל הכרטיס:</label>
+        <InputMask
+          maskChar=""
+          placeholder="User Name"
+          maxLength="20"
+          onChange={handleNameChange}
+        />
+        <br></br>
+        <label>תוקף:</label>
+        <InputMask
+          mask="99 99"
+          maskChar=""
+          //maxLength="4"
+          placeholder="month / year"
+          onChange={handleExpiryChange}
+        />
+      </form>
+    </div>
+  );
+
 }
 
-export default Card;
