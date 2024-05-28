@@ -9,65 +9,71 @@ import { useState } from 'react';
 
 export default function Card({ CreditData, setCreditData }) {
 
-  let CreditCardDataTemp = CreditData;
+  let CreditCardDataTemp = { CreditData };
 
 
   function handleNumberChange(e) {
     let text = e.target.value;
     let initial = "•••• •••• •••• ••••";
     let number_card;
-    if (text.length === 0) {
+    CreditCardDataTemp.CreditNumber = text
+    CreditCardDataTemp.NameUserCredit = CreditData.NameUserCredit
+    CreditCardDataTemp.ValidYear = CreditData.ValidYear
+    CreditCardDataTemp.ValidMonth = CreditData.ValidMonth
+
+
+    setCreditData(CreditCardDataTemp)
+    console.log(text)
+    if (text === " ") {
       CreditCardDataTemp.CreditNumber = initial
-      setCreditData({
-        CreditCardDataTemp
-      });
+      setCreditData(CreditCardDataTemp);
     }
     else {
       number_card = initial.slice(text.length - 1);
       CreditCardDataTemp.CreditNumber = e.target.value + number_card
 
-      setCreditData({
-        CreditCardDataTemp
-      });
+      setCreditData(CreditCardDataTemp);
     }
-
   };
   function handleNameChange(e) {
     let name = e.target.value;
     if (e.target.value.match(/[0-9]/g)) {
       e.target.value = name.slice(0, name.length - 1);
     }
+
+    CreditCardDataTemp.NameUserCredit = CreditData.NameUserCredit
+    CreditCardDataTemp.ValidYear = CreditData.ValidYear
+    CreditCardDataTemp.ValidMonth = CreditData.ValidMonth
+    CreditCardDataTemp.CreditNumber = CreditData.CreditNumber
     CreditCardDataTemp.NameUserCredit = e.target.value.toUpperCase()
-    setCreditData({
-      CreditCardDataTemp
-    });
+    setCreditData(CreditCardDataTemp);
     if (e.target.value === "") {
       CreditCardDataTemp.NameUserCredit = "Your NAME"
-
-      setCreditData({
-        CreditCardDataTemp
-      });
+      setCreditData(CreditCardDataTemp);
     }
   };
+
+
   function handleExpiryChange(e) {
     let date = e.target.value;
+
+    CreditCardDataTemp.NameUserCredit = CreditData.NameUserCredit
+    CreditCardDataTemp.CreditNumber = CreditData.CreditNumber
+
+
     if (date.slice(0, 2) > 12) {
       e.target.value = 1;
     }
+
     if (date.slice(0, 2) < 13) {
       CreditCardDataTemp.ValidYear = date.slice(0, 2)
-      CreditCardDataTemp.ValidYear = date.slice(2)
-
-      setCreditData({
-        CreditCardDataTemp
-      });
+      CreditCardDataTemp.ValidMonth = date.slice(2)
+      setCreditData(CreditCardDataTemp);
     }
     if (e.target.value === "") {
       CreditCardDataTemp.ValidYear = "•• "
       CreditCardDataTemp.ValidYear = "•• "
-      setCreditData({
-        CreditCardDataTemp
-      });
+      setCreditData(CreditCardDataTemp);
     }
   };
   return (
@@ -98,7 +104,7 @@ export default function Card({ CreditData, setCreditData }) {
         <InputMask
           maskChar=""
           placeholder="User Name"
-          maxLength="20"
+          maxLength="14"
           onChange={handleNameChange}
         />
         <br></br>

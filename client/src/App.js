@@ -4,6 +4,7 @@ import LaundryBot from './landryBot/components/LaundryBot';
 import { Routes, Route, useNavigate, } from 'react-router-dom';
 import Enrollment from './landryBot/components/Enrollment';
 import Header from './landryBot/components/Header';
+import Password from './try/Try';
 function App() {
 
   const navigate = useNavigate()
@@ -17,6 +18,8 @@ function App() {
           <Route index element={<EnterToSiteForm />} />
           <Route element={<LaundryBot />} path="laundry-bot" />
           <Route element={<Enrollment />} path="laundry-bot-enrollment" />
+          <Route element={<Password />} path="try" />
+
 
 
         </Routes>

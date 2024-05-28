@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import ImageArea from './ImageArea.js';
 import UserData from '../data/models/UserData.js';
 import { AllUsers } from '../data/DB.js';
+import Password from './Password.js';
 
 
 
@@ -14,13 +15,16 @@ export default class EnterToSiteForm extends Component {
     this.state = {
       userName: "",
       userMail: "",
-      userPassword: ""
+      userPassword: "",
+      showPassword: "false"
     };
     this.updateUserMail = this.updateUserMail.bind(this); // קשרו את הפונקציה
     this.updateUserName = this.updateUserName.bind(this); // קשרו את הפונקציה
     this.updateUserPassword = this.updateUserPassword.bind(this); // קשרו את הפונקציה
+    this.updateShowPassword = this.updateShowPassword.bind(this); // קשרו את הפונקציה
+
   }
-  
+
 
   //פונקציה שבודקת אם המשתמש קיים ברשימה
   isUser() {
@@ -37,8 +41,11 @@ export default class EnterToSiteForm extends Component {
   updateUserMail(event) {
     this.setState({ userMail: event.target.value })
   }
-  updateUserPassword(event) {
-    this.setState({ userPassword: event.target.value })
+  updateUserPassword(userPassword) {
+    this.setState({ userPassword})
+  }
+  updateShowPassword(showPassword) {
+    this.setState({showPassword})
   }
   allFull() {
     if (this.state.userName === "" || this.state.userMail === "" || this.state.userPassword === "")
@@ -50,7 +57,7 @@ export default class EnterToSiteForm extends Component {
       return <Link to="/laundry-bot"> התחל שימוש</Link>
 
     if (this.allFull() && !this.isUser())
-      return <Link to="/laundry-bot-enrollment" state={{userName:this.state.userName,userMail:this.state.userMail,userPassword:this.state.userPassword}}>להרשמה ותשלום לחץ כאן🖊️</Link>
+      return <Link to="/laundry-bot-enrollment" state={{ userName: this.state.userName, userMail: this.state.userMail, userPassword: this.state.userPassword }}>להרשמה ותשלום לחץ כאן🖊️</Link>
 
     return <h3> התחל שימוש</h3>
 
@@ -68,26 +75,27 @@ export default class EnterToSiteForm extends Component {
             <form>
               <div className="form-group">
 
-                <h2>isUser: {String(this.isUser())} isFull: {String(this.allFull())}</h2>
+                {/* <h2>isUser: {String(this.isUser())} isFull: {String(this.allFull())}</h2> */}
 
                 <label htmlFor="userName">שם משתמש</label>
                 <input type="text" id="userName" name="userName" required
                   onChange={this.updateUserName} />
-                <h2>userName: {this.state.userName}</h2>
+                {/* <h2>userName: {this.state.userName}</h2> */}
 
               </div>
               <div className="form-group">
                 <label htmlFor="email">מייל</label>
                 <input type="email" id="email" name="email" required
                   onChange={this.updateUserMail} />
-                <h2>userMail: {this.state.userMail}</h2>
+                {/* <h2>userMail: {this.state.userMail}</h2> */}
               </div>
-              <div className="form-group">
-                <label htmlFor="password">סיסמא</label>
-                <input type="password" id="password" name="password" required
-                  onChange={this.updateUserPassword} />
-                <h2>userPassword: {this.state.userPassword}</h2>
-              </div>
+              <Password password={this.state.userPassword} setPassword={this.updateUserPassword} showPassword={this.state.showPassword} setShowPassword={this.updateShowPassword} />
+              {/* <div className="form-group"> */}
+                {/* <label htmlFor="password">סיסמא</label> */}
+                {/* <input type="password" id="password" name="password" required */}
+                  {/* // onChange={this.updateUserPassword} /> */}
+                {/* <h2>userPassword: {this.state.userPassword}</h2> */}
+              {/* </div> */}
               <div className='linksArea'>
                 <button className='link'>{this.handleSubmit()}</button>
               </div>
@@ -96,6 +104,6 @@ export default class EnterToSiteForm extends Component {
 
         </div>
       </div>
-      );
+    );
   };
 }
