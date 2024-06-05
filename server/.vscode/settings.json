@@ -1,5 +1,8 @@
 {
     "python.analysis.extraPaths": [
         "./api_"
-    ]
+    ],
+    "[python]": {
+        "editor.defaultFormatter": null
+    }
 }

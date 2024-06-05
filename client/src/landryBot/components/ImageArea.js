@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
 import './styles/ImageAreaStyle.css';
-
+import ApiExample from '../api_request/ImageService';
+import axios from "axios";
 
 export default function ImageArea({ title }) {
     const [url, setUrl] = React.useState('');
-
+    const [result,setResult]=React.useState('starting');
+   
     const onChange = (e) => {
         const files = e.target.files;
         files.length > 0 && setUrl(URL.createObjectURL(files[0]));
     };
+
+
+    
+const handleClick=()=>{
+    let u=String(url)
+    axios.post('http://127.0.0.1:5000/check_image/', {
+    url:u
+    }).then((res) => {
+      console.log(res)
+    })
+}
+
+
+
+
+
     return (
         <div>
         <h3 className='title'>{title}</h3>
@@ -28,41 +46,12 @@ export default function ImageArea({ title }) {
             }
 
         </div>
-            <input  className='send' type='submit' value="בדיקה"/>
+            <input  className='send' type='submit' value="בדיקה" onClick={handleClick}/>
+            <div>{result}</div>
+            <h2>sorce image: {url}</h2>
         </div>
         </div>
     )
 }
 
 
-// return <div className='image_area'>
-// <h3>{title}</h3>
-// <div className="drop-area" >
-//     <div className="drag-square"> <input type="file"></input></div>
-// </div>
-// </div>
-
-
-
-
-// import React, { useState } from 'react';
-
-// export default function ImageArea({ title }) {
-//     const [file, setFile] = useState();
-//     function handleChange(e) {
-//         console.log(e.target.files);
-//         setFile(URL.createObjectURL(e.target.files[0]));
-//     }
-
-    
-
-    
-//     return (
-//         <div className="image_area">
-//             <h3>{title}</h3>
-//             <input type="file" onChange={handleChange} />
-//             <img className='drag-square' src={file}  ></img>
-//             <input type='submit' value="שליחה"/>
-//         </div>
-//     )
-// }

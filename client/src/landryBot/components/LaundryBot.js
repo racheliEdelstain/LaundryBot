@@ -3,15 +3,19 @@ import './styles/LaundryBotStyle.css'; // Import your CSS file for styling
 import ImageArea from './ImageArea';
 import UnderPile from './UnderPile';
 import UnderGarment from './UnderGarment';
+import { useLocation, Link } from 'react-router-dom';
 
 
 
-const LaundryBot = () => {
+export default function LaundryBot() {
+    const currentLocation  = useLocation();
+    const { userName = '' } = currentLocation .state || {};
+
     return (
         <div class="grid-container">
             <title>LaundryBot!!!!</title>
             <div class="item1">
-                <p className='p'>ברוכים הבאים!<br />כדי להשתמש באחת מהאופציות העומדות לרשותך עליך לגרור או להעלות תמונה.</p>
+                <p className='p'>שלום {userName}<br />כדי להשתמש באחת מהאופציות העומדות לרשותך עליך לגרור או להעלות תמונה.</p>
             </div>
             <div class="item2-item3">
                 <div className='Garment'>
@@ -29,4 +33,3 @@ const LaundryBot = () => {
     );
 };
 
-export default LaundryBot;

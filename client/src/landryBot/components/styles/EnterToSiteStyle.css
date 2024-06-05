@@ -39,36 +39,81 @@
     background-color: rgba(255, 255, 255, 0.372);
  }
   
+/* סגנונות עבור הקישור */
+.link {
+  text-decoration: none; /* הסרת קו תחתון */
+}
 
+/* סגנונות עבור הכפתור */
+.button_in_link {
+  background-color: #09C4A7; /* צבע רקע ירוק */
+  color: white; /* צבע טקסט לבן */
+  border: none; /* ללא גבול */
+  padding: 10px 32px; /* ריווח פנימי */
+  text-align: center; /* יישור טקסט למרכז */
+  text-decoration: none; /* הסרת קו תחתון */
+  display: inline-block; /* תצוגה אינליין בלוק */
+  font-size: 22px; /* גודל טקסט */
+  margin: 4px 2px; /* מרווח חיצוני */
+  cursor: pointer; /* שינוי הסמן לאצבע */
+  transition: background-color 0.3s ease; /*אנימציה לשינוי צבע*/
+  border-radius: 3px;
+
+}
+
+/* שינוי צבע הכפתור כשעוברים עליו */
+.button_in_link:hover {
+  background-color: #07907c94;
+  border: 1px ridge  #09C4A7;
+}
   
-  .link:hover {
+
+ 
+ 
+  .linksArea{
+margin-top: 10%;
+  }
+  .show_password{
+    margin-top:10px ;
+    display: flex;
+    justify-content: center;
+    align-items: baseline; 
+    color: #2C3C5A;
+   }
+   .show_password:hover{
+    text-shadow: 0 0 6px  #2C3C5A;  
+ }
+
+
+   /* .link:hover {
     background-color: #07907c94;
     border: 1px ridge  #09C4A7;
   }
+  .button_in_link{
+    background-color:#ffffff00;
+    border: none;
+  }
   .link{
-    /* background-color: #2c3c5a; */
-    width: 250px;
     padding: 2%;
+    width: 250px;
     margin: 3% 24% 3% 24%;
     display: flex;
     text-align: center;
-    font-family: inherit;
     border: 1px ridge  #09C4A7;
     border-radius: 3px;
     box-shadow: 0 0 7px  #09C4A7; 
     direction: rtl;
+    font-weight: 450;
+
    }
    .link *{
-    text-decoration: none;
+height: 30px; 
+text-decoration: none;
     font-size: 17px;
     padding:1.8px;
     text-align: center;
     margin:0 auto;
     color:rgb(0, 0, 0);
     font-weight: 450;
-  }
-  .linksArea{
-margin-top: 10%;
-  }
-
-  
+  } */
+ 

@@ -6,6 +6,7 @@ import ImageArea from './ImageArea.js';
 import UserData from '../data/models/UserData.js';
 import { AllUsers } from '../data/DB.js';
 import Password from './Password.js';
+import axios from "axios";
 
 
 
@@ -22,17 +23,22 @@ export default class EnterToSiteForm extends Component {
     this.updateUserName = this.updateUserName.bind(this); // קשרו את הפונקציה
     this.updateUserPassword = this.updateUserPassword.bind(this); // קשרו את הפונקציה
     this.updateShowPassword = this.updateShowPassword.bind(this); // קשרו את הפונקציה
-
   }
 
 
   //פונקציה שבודקת אם המשתמש קיים ברשימה
   isUser() {
-    for (let i = 0; i < AllUsers.length; i++) {
-      if (AllUsers[i].UserName === this.state.userName && AllUsers[i].Password === this.state.userPassword && AllUsers[i].Mail === this.state.userMail)
-        return true
-    }
-    return false;
+    
+    axios.post('http://127.0.0.1:5000/is_user/', {
+      user_name: this.state.userName,
+      email: this.state.userMail,
+      password: this.state.userPassword
+    }).then((res) => {
+      console.log(res)
+      return res
+    })
+
+
   };
 
   updateUserName(event) {
@@ -42,10 +48,10 @@ export default class EnterToSiteForm extends Component {
     this.setState({ userMail: event.target.value })
   }
   updateUserPassword(userPassword) {
-    this.setState({ userPassword})
+    this.setState({ userPassword })
   }
   updateShowPassword(showPassword) {
-    this.setState({showPassword})
+    this.setState({ showPassword })
   }
   allFull() {
     if (this.state.userName === "" || this.state.userMail === "" || this.state.userPassword === "")
@@ -53,15 +59,13 @@ export default class EnterToSiteForm extends Component {
     return true;
   }
   handleSubmit() {
-    if (this.isUser() && this.allFull())//המשתמש קיים במערכת
-      return <Link to="/laundry-bot"> התחל שימוש</Link>
+    if (this.isUser()==="True" && this.allFull())//המשתמש קיים במערכת
+      return <Link to="/laundry-bot" state={{ userName: this.state.userName }} className='link'> התחל שימוש</Link>
 
-    if (this.allFull() && !this.isUser())
-      return <Link to="/laundry-bot-enrollment" state={{ userName: this.state.userName, userMail: this.state.userMail, userPassword: this.state.userPassword }}>להרשמה ותשלום לחץ כאן🖊️</Link>
+    if (this.allFull() && this.isUser()==="False")
+      return <Link to="/laundry-bot-enrollment" className='link' state={{ userName: this.state.userName, userMail: this.state.userMail, userPassword: this.state.userPassword }}>להרשמה ותשלום לחץ כאן🖊️</Link>
 
-    return <h3> התחל שימוש</h3>
-
-    // this.isUser() && this.allFull() ? <Link to="/laundry-bot"> התחל שימוש</Link> : <Link to="/laundry-bot-enrollment">להרשמה ותשלום לחץ כאן!</Link>
+    return <h3 className='link'> התחל שימוש</h3>
   }
 
   render() {
@@ -75,29 +79,18 @@ export default class EnterToSiteForm extends Component {
             <form>
               <div className="form-group">
 
-                {/* <h2>isUser: {String(this.isUser())} isFull: {String(this.allFull())}</h2> */}
-
                 <label htmlFor="userName">שם משתמש</label>
                 <input type="text" id="userName" name="userName" required
                   onChange={this.updateUserName} />
-                {/* <h2>userName: {this.state.userName}</h2> */}
-
               </div>
               <div className="form-group">
                 <label htmlFor="email">מייל</label>
                 <input type="email" id="email" name="email" required
                   onChange={this.updateUserMail} />
-                {/* <h2>userMail: {this.state.userMail}</h2> */}
               </div>
               <Password password={this.state.userPassword} setPassword={this.updateUserPassword} showPassword={this.state.showPassword} setShowPassword={this.updateShowPassword} />
-              {/* <div className="form-group"> */}
-                {/* <label htmlFor="password">סיסמא</label> */}
-                {/* <input type="password" id="password" name="password" required */}
-                  {/* // onChange={this.updateUserPassword} /> */}
-                {/* <h2>userPassword: {this.state.userPassword}</h2> */}
-              {/* </div> */}
               <div className='linksArea'>
-                <button className='link'>{this.handleSubmit()}</button>
+                <button className='button_in_link'>{this.handleSubmit()}</button>
               </div>
             </form>
           </div>
