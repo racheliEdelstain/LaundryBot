@@ -5,11 +5,25 @@ import webcolors
 from rembg import remove 
 import requests
 
+
+# פונקציה שמקבלת מחרוזת וחותכת אותה מהסוף עד שהיא רואה את התו \ ומחזירה אותה
+def cut_string_at_back(string, delimiter):
+    # מחפש את המיקום של התו המבוקש במחרוזת
+    index = string.rfind(delimiter)
+    
+    # אם מצא את התו במחרוזת, מחזיר את החלק של המחרוזת מהמיקום של התו עד סופה
+    if index != -1:
+        return string[index+1:]
+    else:
+        # אם לא מצא את התו במחרוזת, מחזיר את המחרוזת כפי שהיא
+        return "my_image.png"
+    
 # הפונקציה מקבלת ניתוב של תמונה והיא עוברת על כל הפיקסלים ואם היא רואה שמופיעה צבע 0,0,0 אז היא מחליפה אותו ב0,0,1 הפונקציה מחזירה ניתוב לתתמונה החדשה
 def replace_black(input_path):
     print("--------------replace_black---------------")
     print("input_path: ",input_path)
-    if input_path.find("http")!=-1:
+    
+    if input_path.find("http")!=-1:#התמונה היא קישור
         print("the image is url----------------")
         input_image = Image.open(requests.get(input_path, stream=True).raw)
     else:
@@ -17,7 +31,11 @@ def replace_black(input_path):
         input_image = Image.open(input_path) 
         
     output_dir = "C:\\Users\\user\\Pictures\\clothes"
-    file_name="new_image_after_replace.png"
+    if input_path.find('/')!=-1:
+        char_delete='/'
+    else:
+        char_delete='\\'
+    file_name="image_after_replace  "+cut_string_at_back(input_path,char_delete)+".png"
     output_path=output_dir+"\\"+file_name
     print("output path: ",output_path)
     input_image.save(output_path)
@@ -45,11 +63,7 @@ def replace_black(input_path):
 # פונקציה שמקבלת תמונה ומחזירה ניתוב לתמונה חדשה שהוסר ממנה הרקע
 def remove_background(input_path):
     print("--------------remove_background---------------")
-    # print("input_path: ",input_path)
-    # if input_path.find("http")!=-1:
-    #     print("the image is url----------------")
-    #     input = Image.open(requests.get(input_path, stream=True).raw)
-    # else:
+
     print("the image is path to file----------------")
     input = Image.open(input_path) 
 
@@ -57,7 +71,11 @@ def remove_background(input_path):
     output_dir = "C:\\Users\\user\\Pictures\\clothes"
 
     # Processing the image 
-    file_name="new_image_after_remove.png"
+    if input_path.find('/')!=-1:
+        char_delete='/'
+    else:
+        char_delete='\\'
+    file_name="image_after_remove  "+cut_string_at_back(input_path,char_delete)+".png"    
     output_path=output_dir+"\\"+file_name
     print("output path: ",output_path)
 
@@ -68,6 +86,7 @@ def remove_background(input_path):
     output.save(output_path) 
     return output_path
 
+# https://www.geeksforgeeks.org/find-most-used-colors-in-image-using-python/
 # הפונקצהי מקבלת תמונה שהיא כבר פתוה ומוכנה לשימוש  שולחת לפונקציה לניוקי הרקע ומחזירה את הממוצע של הצבע של האוביקט
 def most_common_used_color(img):
     print("--------------most_common_used_color---------------")
@@ -127,6 +146,6 @@ def dominant_color_in_image(image_path):
     return (common_color,name_color)
 
 
-(r,g,b),color=dominant_color_in_image(r"https://www.picshare.co.il/s_pictures/img161393.jpg")
+(r,g,b),color=dominant_color_in_image(r"https://raw.githubusercontent.com/alexeygrigorev/clothing-dataset/master/images/010a6fce-990b-4e6d-9ccd-93f841247c3f.jpg")
 print("-------return--------  \n",r,g,b)
 print(color)
