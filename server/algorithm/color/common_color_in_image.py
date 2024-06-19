@@ -146,6 +146,6 @@ def dominant_color_in_image(image_path):
     return (common_color,name_color)
 
 
-(r,g,b),color=dominant_color_in_image(r"https://raw.githubusercontent.com/alexeygrigorev/clothing-dataset/master/images/010a6fce-990b-4e6d-9ccd-93f841247c3f.jpg")
+(r,g,b),color=dominant_color_in_image(r"C:\Users\user\Downloads\clothing-dataset-master\clothing-dataset-master\images\0af4203f-8998-4719-92fe-65c14a6b6093.jpg")
 print("-------return--------  \n",r,g,b)
 print(color)
